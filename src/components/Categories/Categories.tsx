@@ -1,18 +1,18 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
-import {CATEGORIES} from "../../constants";
+import {Link, useLocation} from "react-router-dom";
+import { CATEGORIES } from "../../constants";
 
 const Categories: React.FC = () => {
   return (
     <ul>
       <li className="fs-3">
-        <NavLink to="/quotes">All</NavLink>
+        <Link to="/quotes" className="text-decoration-none text-white">All</Link>
       </li>
 
       {
         CATEGORIES.map(category => (
           <li className="fs-3" key={category.id}>
-            <NavLink to={category.id} />
+            <Link to={`/quotes/${category.id}`} className="text-decoration-none text-white">{category.title}</Link>
           </li>
         ))
       }

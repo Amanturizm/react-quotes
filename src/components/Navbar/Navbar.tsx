@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from "react-router-dom";
+import {Link, NavLink, useLocation} from "react-router-dom";
 
 const NavBar = () => {
   return (
@@ -9,7 +9,12 @@ const NavBar = () => {
         <div className="collapse navbar-collapse d-flex justify-content-end">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <NavLink className="nav-link text-white" to="/quotes">Quotes</NavLink>
+              <NavLink
+                className="nav-link text-white"
+                to={useLocation().pathname === '/' ? '/' : '/quotes'}
+              >
+                Quotes
+              </NavLink>
             </li>
             <li className="nav-item">
               <NavLink className="nav-link text-white" to="/new-quote">Submit new quote</NavLink>
