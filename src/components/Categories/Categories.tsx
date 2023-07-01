@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useLocation} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CATEGORIES } from "../../constants";
 
 const Categories: React.FC = () => {
@@ -12,7 +12,12 @@ const Categories: React.FC = () => {
       {
         CATEGORIES.map(category => (
           <li className="fs-3" key={category.id}>
-            <Link to={`/quotes/${category.id}`} className="text-decoration-none text-white">{category.title}</Link>
+            <Link
+              to={`/quotes/${category.id}`}
+              className="text-decoration-none text-white"
+            >
+              {category.title}
+            </Link>
           </li>
         ))
       }

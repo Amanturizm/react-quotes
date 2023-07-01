@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
-import {Navigate, Route, Routes, useLocation, useParams} from "react-router-dom";
 import Home from "./containers/Home/Home";
-import Quotes from "./components/Quotes/Quotes";
 import NewQuote from "./containers/NewQuote/NewQuote";
 import QuoteForm from "./components/QuoteForm/QuoteForm";
+import Quotes from "./components/Quotes/Quotes";
 
 const App = () => {
   const { pathname } = useLocation();

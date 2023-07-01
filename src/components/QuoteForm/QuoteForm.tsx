@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import axiosApi from "../../axiosApi";
-import {CATEGORIES} from "../../constants";
+import { CATEGORIES } from "../../constants";
 import CloseBtn from "../CloseBtn/CloseBtn";
 
 const QuoteForm = () => {

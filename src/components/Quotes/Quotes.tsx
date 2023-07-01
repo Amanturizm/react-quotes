@@ -1,10 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Outlet, useParams} from "react-router-dom";
+import React, { useCallback, useEffect, useState } from 'react';
+import { Outlet, useParams } from "react-router-dom";
 import axiosApi from "../../axiosApi";
-import QuoteItem from "../QuoteItem/QuoteItem";
 import {CATEGORIES} from "../../constants";
+import QuoteItem from "../QuoteItem/QuoteItem";
 
-const Quotes: React.FC = () => {
+const Quotes = () => {
   const { category } = useParams();
 
   const [quotes, setQuotes] = useState<IQuote[]>([]);

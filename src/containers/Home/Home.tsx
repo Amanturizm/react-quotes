@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
-import {Outlet, useLocation, useParams} from "react-router-dom";
+import React from 'react';
+import { Outlet } from "react-router-dom";
 import Categories from "../../components/Categories/Categories";
-import Quotes from "../../components/Quotes/Quotes";
 
 const Home = () => {
   return (
