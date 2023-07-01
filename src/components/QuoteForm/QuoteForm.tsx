@@ -17,16 +17,25 @@ const QuoteForm = () => {
 
   const postData = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
-    try {
-      await axiosApi.post('/quotes.json', quote);
+    if (quote.category === '') {
+      alert('Выберите категорию');
+    } else if (quote.author.length < 2) {
+      alert('Введите автора');
+    } else if (quote.text.length < 2) {
+      alert('Введите текст');
+    } else {
+      setLoading(true);
 
-      navigate('/quotes');
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
+      try {
+        await axiosApi.post('/quotes.json', quote);
+
+        navigate('/quotes');
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -55,16 +64,23 @@ const QuoteForm = () => {
 
   const editData = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
-    try {
-      await axiosApi.put(`/quotes/${id}.json`, quote);
+    if (quote.author.length < 2) {
+      alert('Введите автора');
+    } else if (quote.text.length < 2) {
+      alert('Введите текст');
+    } else {
+      setLoading(true);
 
-      navigate('/quotes/' + quote.category);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
+      try {
+        await axiosApi.put(`/quotes/${id}.json`, quote);
+
+        navigate('/quotes/' + quote.category);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
