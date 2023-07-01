@@ -1,17 +1,20 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import QuoteItem from "../QuoteItem/QuoteItem";
 import {Outlet, useParams} from "react-router-dom";
 import axiosApi from "../../axiosApi";
+import QuoteItem from "../QuoteItem/QuoteItem";
 import {CATEGORIES} from "../../constants";
 
 const Quotes: React.FC = () => {
   const { category } = useParams();
 
   const [quotes, setQuotes] = useState<IQuote[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   let currentCategory: string = 'All';
 
   const fetchQuotes = useCallback(async () => {
+    setLoading(true);
+
     try {
       const endpoint = category ? `/quotes.json?orderBy="category"&equalTo="${category}"` : '/quotes.json';
       const { data } = await axiosApi.get<IResponseQuote>(endpoint);
@@ -19,6 +22,8 @@ const Quotes: React.FC = () => {
       setQuotes(Object.keys(data).map(id => ({ ...data[id], id })));
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   }, [category]);
 
@@ -32,6 +37,12 @@ const Quotes: React.FC = () => {
     });
   }
 
+  const preloader = loading ? (
+    <div className="preloader">
+      <div className="loader"></div>
+    </div>
+  ) : null;
+
   return (
     <>
     <div className="d-flex flex-column gap-3 w-50">
@@ -42,6 +53,9 @@ const Quotes: React.FC = () => {
       }
 
     </div>
+
+      {preloader}
+
       <div className="position-fixed start-50 top-50 translate-middle bg-black rounded-5">
         <Outlet />
       </div>

@@ -6,6 +6,7 @@ import CloseBtn from "../CloseBtn/CloseBtn";
 
 const QuoteForm = () => {
   const [quote, setQuote] = useState<IQuoteForm>({ category: '', author: '', text: '' });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const changeValue = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) => {
     setQuote(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
@@ -16,6 +17,7 @@ const QuoteForm = () => {
 
   const postData = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       await axiosApi.post('/quotes.json', quote);
@@ -23,6 +25,8 @@ const QuoteForm = () => {
       navigate('/quotes');
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,12 +34,16 @@ const QuoteForm = () => {
   const { category, id } = useParams();
 
   const getQuoteContent = useCallback(async (id: string) => {
+    setLoading(true);
+
     try {
       const { data } = await axiosApi.get<IQuote>(`/quotes/${id}.json`);
 
       setQuote({ category: data.category!, author: data.author, text: data.text });
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -47,6 +55,7 @@ const QuoteForm = () => {
 
   const editData = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       await axiosApi.put(`/quotes/${id}.json`, quote);
@@ -54,8 +63,16 @@ const QuoteForm = () => {
       navigate('/quotes/' + quote.category);
     } catch (e) {
       console.error(e);
+    } finally {
+      setLoading(false);
     }
   };
+
+  const preloader = loading ? (
+    <div className="preloader">
+      <div className="loader"></div>
+    </div>
+  ) : null;
 
   return (
     <form onSubmit={ id ? editData : postData } style={{ minWidth: 300 }} className="container w-50 p-4">
@@ -107,7 +124,7 @@ const QuoteForm = () => {
       </button>
 
       { id ? <CloseBtn to={`/quotes/${category}`} /> : null }
-      {/*{preloader}*/}
+      {preloader}
     </form>
   );
 };
